@@ -327,32 +327,32 @@ class _CadastroPageState extends State<CadastroPage> {
 
               Column(
                 children: [
-                  RadioListTile<bool>(
+                  RadioListTile<String>(
                     title: const Text(
                       'Masculino',
                       style: TextStyle(color: Colors.black87),
                     ),
-                    value: true,
+                    value: 'Masculino',
                     activeColor: Colors.indigoAccent,
-                    groupValue: _tipoPessoa,
-                    onChanged: (bool? tipo) {
+                    groupValue: _sexoPessoa,
+                    onChanged: (String? value) {
                       setState(() {
-                        _tipoPessoa = tipo!;
+                        _sexoPessoa = value!;
                       });
                     },
                   ),
 
-                  RadioListTile<bool>(
+                  RadioListTile<String>(
                     title: Text(
                       'Feminino',
                       style: TextStyle(color: Colors.black87),
                     ),
-                    value: false,
+                    value: 'Feminino',
                     activeColor: Colors.indigoAccent,
-                    groupValue: _tipoPessoa,
-                    onChanged: (bool? tipo) {
+                    groupValue: _sexoPessoa,
+                    onChanged: (String? value) {
                       setState(() {
-                        _tipoPessoa = tipo!;
+                        _sexoPessoa = value!;
                       });
                     },
                   ),
