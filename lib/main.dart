@@ -123,6 +123,10 @@ class _CadastroPageState extends State<CadastroPage> {
                 fillColor: Colors.white,
                 hintText: 'Nome Completo',
                 hintStyle: TextStyle(color: Colors.black87, fontSize: 14),
+                prefixIcon: Icon(
+                  Icons.person_outline,
+                  color: Colors.indigoAccent,
+                ),
 
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
@@ -157,6 +161,10 @@ class _CadastroPageState extends State<CadastroPage> {
                 fillColor: Colors.white,
                 hintText: 'E-mail',
                 hintStyle: TextStyle(color: Colors.black87, fontSize: 14),
+                prefixIcon: Icon(
+                  Icons.email_outlined,
+                  color: Colors.indigoAccent,
+                ),
 
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
@@ -191,6 +199,10 @@ class _CadastroPageState extends State<CadastroPage> {
                 fillColor: Colors.white,
                 hintText: 'Telefone',
                 hintStyle: TextStyle(color: Colors.black87, fontSize: 14),
+                prefixIcon: Icon(
+                  Icons.phone_outlined,
+                  color: Colors.indigoAccent,
+                ),
 
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
@@ -223,8 +235,12 @@ class _CadastroPageState extends State<CadastroPage> {
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
-                hintText: 'Enereço',
+                hintText: 'Endereço',
                 hintStyle: TextStyle(color: Colors.black87, fontSize: 14),
+                prefixIcon: Icon(
+                  Icons.location_on_outlined,
+                  color: Colors.indigoAccent,
+                ),
 
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
@@ -260,6 +276,10 @@ class _CadastroPageState extends State<CadastroPage> {
                   fillColor: Colors.white,
                   hintText: 'Data de Nascimento',
                   hintStyle: TextStyle(color: Colors.black87, fontSize: 14),
+                  prefixIcon: Icon(
+                    Icons.calendar_month,
+                    color: Colors.indigoAccent,
+                  ),
 
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
@@ -296,6 +316,10 @@ class _CadastroPageState extends State<CadastroPage> {
                   fillColor: Colors.white,
                   hintText: 'CPF',
                   hintStyle: TextStyle(color: Colors.black87, fontSize: 14),
+                  prefixIcon: Icon(
+                    Icons.badge_outlined,
+                    color: Colors.indigoAccent,
+                  ),
 
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
@@ -368,6 +392,10 @@ class _CadastroPageState extends State<CadastroPage> {
                   fillColor: Colors.white,
                   hintText: 'Nome Fantasia',
                   hintStyle: TextStyle(color: Colors.black87, fontSize: 14),
+                  prefixIcon: Icon(
+                    Icons.storefront_outlined,
+                    color: Colors.indigoAccent,
+                  ),
 
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
@@ -404,6 +432,10 @@ class _CadastroPageState extends State<CadastroPage> {
                   fillColor: Colors.white,
                   hintText: 'CNPJ',
                   hintStyle: TextStyle(color: Colors.black87, fontSize: 14),
+                  prefixIcon: Icon(
+                    Icons.badge_outlined,
+                    color: Colors.indigoAccent,
+                  ),
 
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
