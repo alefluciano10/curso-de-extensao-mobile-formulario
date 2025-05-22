@@ -39,7 +39,7 @@ class _CadastroPageState extends State<CadastroPage> {
   final TextEditingController _cnpjController = TextEditingController();
   final TextEditingController _enderecoController = TextEditingController();
 
-  // Campo de selecçao
+  // Campo de seleção
 
   bool _tipoPessoa = true;
   bool _aceitoTermo = false;
@@ -112,7 +112,7 @@ class _CadastroPageState extends State<CadastroPage> {
 
             const SizedBox(height: 10),
 
-            // Campo Nome Completo
+            // Campo Nome Completo / Razão Social
             TextField(
               controller: _nomeController,
               keyboardType: TextInputType.name,
@@ -121,124 +121,10 @@ class _CadastroPageState extends State<CadastroPage> {
                 labelStyle: TextStyle(color: Colors.black87),
                 filled: true,
                 fillColor: Colors.white,
-                hintText: 'Nome Completo',
+                hintText: _tipoPessoa ? 'Nome Completo' : 'Razão Social',
                 hintStyle: TextStyle(color: Colors.black87, fontSize: 14),
                 prefixIcon: Icon(
-                  Icons.person_outline,
-                  color: Colors.indigoAccent,
-                ),
-
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFFB0BEC5)),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-
-                contentPadding: EdgeInsets.symmetric(
-                  vertical: 12,
-                  horizontal: 12,
-                ),
-
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.indigoAccent, width: 2),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 12),
-
-            // Campo E-mail
-            TextField(
-              controller: _emailController,
-              keyboardType: TextInputType.emailAddress,
-              textInputAction: TextInputAction.next,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
-                hintText: 'E-mail',
-                hintStyle: TextStyle(color: Colors.black87, fontSize: 14),
-                prefixIcon: Icon(
-                  Icons.email_outlined,
-                  color: Colors.indigoAccent,
-                ),
-
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFFB0BEC5)),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-
-                contentPadding: EdgeInsets.symmetric(
-                  vertical: 12,
-                  horizontal: 12,
-                ),
-
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.indigoAccent, width: 2),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 12),
-
-            // Campo Telefone
-            TextField(
-              controller: _telefoneController,
-              keyboardType: TextInputType.phone,
-              textInputAction: TextInputAction.next,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
-                hintText: 'Telefone',
-                hintStyle: TextStyle(color: Colors.black87, fontSize: 14),
-                prefixIcon: Icon(
-                  Icons.phone_outlined,
-                  color: Colors.indigoAccent,
-                ),
-
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFFB0BEC5)),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-
-                contentPadding: EdgeInsets.symmetric(
-                  vertical: 12,
-                  horizontal: 12,
-                ),
-
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.indigoAccent, width: 2),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 12),
-
-            // Campo Endereço
-            TextField(
-              controller: _enderecoController,
-              keyboardType: TextInputType.streetAddress,
-              textInputAction: TextInputAction.next,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
-                hintText: 'Endereço',
-                hintStyle: TextStyle(color: Colors.black87, fontSize: 14),
-                prefixIcon: Icon(
-                  Icons.location_on_outlined,
+                  _tipoPessoa ? Icons.person_outline : Icons.business,
                   color: Colors.indigoAccent,
                 ),
 
@@ -266,123 +152,7 @@ class _CadastroPageState extends State<CadastroPage> {
             const SizedBox(height: 12),
 
             // Identificação da Pessoa
-            if (_tipoPessoa) ...[
-              TextField(
-                controller: _nascimentoController,
-                keyboardType: TextInputType.datetime,
-                textInputAction: TextInputAction.next,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  hintText: 'Data de Nascimento',
-                  hintStyle: TextStyle(color: Colors.black87, fontSize: 14),
-                  prefixIcon: Icon(
-                    Icons.calendar_month,
-                    color: Colors.indigoAccent,
-                  ),
-
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFFB0BEC5)),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-
-                  contentPadding: EdgeInsets.symmetric(
-                    vertical: 12,
-                    horizontal: 12,
-                  ),
-
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.indigoAccent,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 12),
-
-              TextField(
-                controller: _cpfController,
-                keyboardType: TextInputType.number,
-                textInputAction: TextInputAction.next,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  hintText: 'CPF',
-                  hintStyle: TextStyle(color: Colors.black87, fontSize: 14),
-                  prefixIcon: Icon(
-                    Icons.badge_outlined,
-                    color: Colors.indigoAccent,
-                  ),
-
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFFB0BEC5)),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-
-                  contentPadding: EdgeInsets.symmetric(
-                    vertical: 12,
-                    horizontal: 12,
-                  ),
-
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.indigoAccent,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 15),
-
-              Text('Sexo', style: TextStyle(color: Colors.black87)),
-
-              Column(
-                children: [
-                  RadioListTile<String>(
-                    title: const Text(
-                      'Masculino',
-                      style: TextStyle(color: Colors.black87),
-                    ),
-                    value: 'Masculino',
-                    activeColor: Colors.indigoAccent,
-                    groupValue: _sexoPessoa,
-                    onChanged: (String? value) {
-                      setState(() {
-                        _sexoPessoa = value!;
-                      });
-                    },
-                  ),
-
-                  RadioListTile<String>(
-                    title: Text(
-                      'Feminino',
-                      style: TextStyle(color: Colors.black87),
-                    ),
-                    value: 'Feminino',
-                    activeColor: Colors.indigoAccent,
-                    groupValue: _sexoPessoa,
-                    onChanged: (String? value) {
-                      setState(() {
-                        _sexoPessoa = value!;
-                      });
-                    },
-                  ),
-                ],
-              ),
-            ] else ...[
+            if (!_tipoPessoa) ...[
               TextField(
                 controller: _nomeFantasiaController,
                 keyboardType: TextInputType.name,
@@ -421,7 +191,7 @@ class _CadastroPageState extends State<CadastroPage> {
                 ),
               ),
 
-              const SizedBox(height: 10),
+              const SizedBox(height: 12),
 
               TextField(
                 controller: _cnpjController,
@@ -460,7 +230,252 @@ class _CadastroPageState extends State<CadastroPage> {
                   ),
                 ),
               ),
+            ] else ...[
+              TextField(
+                controller: _nascimentoController,
+                keyboardType: TextInputType.datetime,
+                textInputAction: TextInputAction.next,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  hintText: 'Data de Nascimento',
+                  hintStyle: TextStyle(color: Colors.black87, fontSize: 14),
+                  prefixIcon: Icon(
+                    Icons.calendar_month_outlined,
+                    color: Colors.indigoAccent,
+                  ),
+
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFFB0BEC5)),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 12,
+                    horizontal: 12,
+                  ),
+
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.indigoAccent,
+                      width: 2,
+                    ),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 10),
+
+              TextField(
+                controller: _cpfController,
+                keyboardType: TextInputType.number,
+                textInputAction: TextInputAction.next,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  hintText: 'CPF',
+                  hintStyle: TextStyle(color: Colors.black87, fontSize: 14),
+                  prefixIcon: Icon(
+                    Icons.badge_outlined,
+                    color: Colors.indigoAccent,
+                  ),
+
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFFB0BEC5)),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 12,
+                    horizontal: 12,
+                  ),
+
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.indigoAccent,
+                      width: 2,
+                    ),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+              ),
             ],
+
+            const SizedBox(height: 12),
+
+            TextField(
+              controller: _emailController,
+              keyboardType: TextInputType.emailAddress,
+              textInputAction: TextInputAction.next,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                hintText: 'E-mail',
+                hintStyle: TextStyle(color: Colors.black87, fontSize: 14),
+                prefixIcon: Icon(
+                  Icons.email_outlined,
+                  color: Colors.indigoAccent,
+                ),
+
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFFB0BEC5)),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 12,
+                ),
+
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.indigoAccent, width: 2),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 12),
+
+            TextField(
+              controller: _telefoneController,
+              keyboardType: TextInputType.number,
+              textInputAction: TextInputAction.next,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                hintText: 'Telefone',
+                hintStyle: TextStyle(color: Colors.black87, fontSize: 14),
+                prefixIcon: Icon(Icons.phone, color: Colors.indigoAccent),
+
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFFB0BEC5)),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 12,
+                ),
+
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.indigoAccent, width: 2),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 12),
+
+            TextField(
+              controller: _enderecoController,
+              keyboardType: TextInputType.streetAddress,
+              textInputAction: TextInputAction.next,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                hintText: 'Endereço',
+                hintStyle: TextStyle(color: Colors.black87, fontSize: 14),
+                prefixIcon: Icon(
+                  Icons.location_on_outlined,
+                  color: Colors.indigoAccent,
+                ),
+
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFFB0BEC5)),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 12,
+                ),
+
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.indigoAccent, width: 2),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 13),
+
+            if (_tipoPessoa) ...[
+              Text('Sexo', style: TextStyle(color: Colors.black87)),
+
+              Column(
+                children: [
+                  RadioListTile<String>(
+                    title: const Text(
+                      'Masculino',
+                      style: TextStyle(color: Colors.black87),
+                    ),
+                    value: 'Masculino',
+                    activeColor: Colors.indigoAccent,
+                    groupValue: _sexoPessoa,
+                    onChanged: (String? value) {
+                      setState(() {
+                        _sexoPessoa = value!;
+                      });
+                    },
+                  ),
+
+                  RadioListTile<String>(
+                    title: Text(
+                      'Feminino',
+                      style: TextStyle(color: Colors.black87),
+                    ),
+                    value: 'Feminino',
+                    activeColor: Colors.indigoAccent,
+                    groupValue: _sexoPessoa,
+                    onChanged: (String? value) {
+                      setState(() {
+                        _sexoPessoa = value!;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ],
+
+            Text(
+              'Renda Mensal: $_rendaMensal',
+              style: TextStyle(color: Colors.black87),
+            ),
+
+            Slider(
+              value: _rendaMensal,
+              min: 0,
+              max: 10000,
+              divisions: 100,
+              activeColor: Colors.indigoAccent,
+              label: _rendaMensal.round().toString(),
+              onChanged: (double value) {
+                setState(() {
+                  _rendaMensal = value;
+                });
+              },
+            ),
 
             CheckboxListTile(
               title: const Text(
@@ -477,6 +492,48 @@ class _CadastroPageState extends State<CadastroPage> {
                   _aceitoTermo = aceito!;
                 });
               },
+            ),
+
+            const SizedBox(height: 15),
+
+            SwitchListTile(
+              title: const Text(
+                'Receber Notificações',
+                style: TextStyle(color: Colors.black87),
+              ),
+              activeColor: Colors.indigoAccent,
+              value: _receberNotificacao,
+              onChanged: (bool? receber) {
+                setState(() {
+                  _receberNotificacao = receber!;
+                });
+              },
+            ),
+
+            const SizedBox(height: 30),
+
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF344955),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+                onPressed: () {},
+                label: Text(
+                  'Enviar Formulário',
+                  style: TextStyle(
+                    fontSize: 21,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+
+                icon: Icon(Icons.send_outlined, color: Colors.white),
+              ),
             ),
           ],
         ),
