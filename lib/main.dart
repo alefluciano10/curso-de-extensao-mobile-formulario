@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_masked_text3/flutter_masked_text3.dart';
 
 void main() {
   runApp(const Cadastro());
@@ -33,10 +34,18 @@ class _CadastroPageState extends State<CadastroPage> {
   final TextEditingController _nomeController = TextEditingController();
   final TextEditingController _nomeFantasiaController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _telefoneController = TextEditingController();
-  final TextEditingController _nascimentoController = TextEditingController();
-  final TextEditingController _cpfController = TextEditingController();
-  final TextEditingController _cnpjController = TextEditingController();
+  final MaskedTextController _telefoneController = MaskedTextController(
+    mask: '(00) 00000-0000',
+  );
+  final MaskedTextController _nascimentoController = MaskedTextController(
+    mask: '00/00/0000',
+  );
+  final MaskedTextController _cpfController = MaskedTextController(
+    mask: '000.000.000-00',
+  );
+  final MaskedTextController _cnpjController = MaskedTextController(
+    mask: '00.000.000/0000-00',
+  );
   final TextEditingController _enderecoController = TextEditingController();
 
   // Campo de seleção
@@ -48,6 +57,153 @@ class _CadastroPageState extends State<CadastroPage> {
   double _rendaMensal = 0.0;
 
   List<Map<String, dynamic>> dadosCadastrais = [];
+
+  // ===============
+  // Verificação PF
+  // ===============
+
+  //Verificação do CPF
+
+  bool isValidCPF(String cpf) {
+    cpf = cpf.replaceAll(RegExp(r'[^0-9]'), '');
+
+    if (cpf.length != 11 || RegExp(r'^(\d)\1*$').hasMatch(cpf)) return false;
+
+    int soma1 = 0, soma2 = 0;
+    for (int i = 0; i < 9; i++) {
+      soma1 += int.parse(cpf[i]) * (10 - i);
+      soma2 += int.parse(cpf[i]) * (11 - i);
+    }
+
+    int digito1 = (soma1 * 10) % 11;
+    if (digito1 == 10) digito1 = 0;
+    soma2 += digito1 * 2;
+
+    int digito2 = (soma2 * 10) % 11;
+    if (digito2 == 10) digito2 = 0;
+
+    return cpf[9] == digito1.toString() && cpf[10] == digito2.toString();
+  }
+
+  // Verificação da data de nascimento
+
+  bool isValidDate(String input) {
+    final regex = RegExp(r"^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/\d{4}$");
+    return regex.hasMatch(input);
+  }
+
+  // ===============
+  // Verificação PJ
+  // ===============
+
+  // Verificação do CNPJ
+
+  bool isValidCNPJ(String cnpj) {
+    cnpj = cnpj.replaceAll(RegExp(r'[^0-9]'), '');
+
+    if (cnpj.length != 14 || RegExp(r'^(\d)\1*$').hasMatch(cnpj)) return false;
+
+    List<int> multiplicadores1 = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+    List<int> multiplicadores2 = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+
+    int soma1 = 0;
+    for (int i = 0; i < 12; i++) {
+      soma1 += int.parse(cnpj[i]) * multiplicadores1[i];
+    }
+
+    int digito1 = soma1 % 11;
+    digito1 = digito1 < 2 ? 0 : 11 - digito1;
+
+    int soma2 = 0;
+    for (int i = 0; i < 13; i++) {
+      soma2 += int.parse(cnpj[i]) * multiplicadores2[i];
+    }
+
+    int digito2 = soma2 % 11;
+    digito2 = digito2 < 2 ? 0 : 11 - digito2;
+
+    return cnpj[12] == digito1.toString() && cnpj[13] == digito2.toString();
+  }
+
+  // ====================
+  // Verificações Comuns
+  // ====================
+
+  // Verificação do e-mail
+
+  bool isValidEmail(String email) {
+    final regex = RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
+    return regex.hasMatch(email);
+  }
+
+  // ==========================
+  // Validação antes de enviar
+  // ==========================
+
+  void _validarFormulario() {
+    // Pessoa Física | Pessoa Pessoa Juríca
+    if (_nomeController.text.isEmpty) {
+      _exibirValidacao(
+        _tipoPessoa ? 'Nome é obrigátorio' : 'Razão Social é obrigatória',
+      );
+      return;
+    }
+
+    if (_tipoPessoa) {
+      // Validações para Pessoa Física
+      if (_nascimentoController.text.isEmpty) {
+        _exibirValidacao('Data de nascimento é obrigatória');
+        return;
+      }
+
+      if (!isValidDate(_nascimentoController.text)) {
+        _exibirValidacao('Data de nascimento inválida');
+        return;
+      }
+
+      if (_cpfController.text.isEmpty || !isValidCPF(_cpfController.text)) {
+        _exibirValidacao('CPF inválido ou não preenchido');
+        return;
+      }
+    } else {
+      // Validações para Pessoa Jurídica
+      if (_nomeFantasiaController.text.isEmpty) {
+        _exibirValidacao('Nome Fantasia é obrigatório');
+        return;
+      }
+
+      if (_cnpjController.text.isEmpty || !isValidCNPJ(_cnpjController.text)) {
+        _exibirValidacao('CNPJ inválido ou não preenchido');
+        return;
+      }
+    }
+
+    if (_emailController.text.isEmpty || !isValidEmail(_emailController.text)) {
+      _exibirValidacao('E-mail inválido ou não preenchido');
+      return;
+    }
+
+    if (_telefoneController.text.isEmpty) {
+      _exibirValidacao('Telefone é obrigatório');
+      return;
+    }
+
+    if (_enderecoController.text.isEmpty) {
+      _exibirValidacao('Endereço é obrigatório');
+      return;
+    }
+
+    if (!_aceitoTermo) {
+      _exibirValidacao('Você deve aceitar os termos e condições');
+      return;
+    }
+  }
+
+  void _exibirValidacao(String mensagem) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(mensagem), duration: Duration(seconds: 2)),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -269,7 +425,7 @@ class _CadastroPageState extends State<CadastroPage> {
                 ),
               ),
 
-              const SizedBox(height: 10),
+              const SizedBox(height: 12),
 
               TextField(
                 controller: _cpfController,
@@ -522,7 +678,7 @@ class _CadastroPageState extends State<CadastroPage> {
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: _validarFormulario,
                 label: Text(
                   'Enviar Formulário',
                   style: TextStyle(
