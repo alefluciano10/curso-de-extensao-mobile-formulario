@@ -161,8 +161,13 @@ class _CadastroPageState extends State<CadastroPage> {
         return;
       }
 
-      if (_cpfController.text.isEmpty || !isValidCPF(_cpfController.text)) {
-        _exibirValidacao('CPF inválido ou não preenchido');
+      if (_cpfController.text.isEmpty) {
+        _exibirValidacao('CPF é obrigatório');
+        return;
+      }
+
+      if (!isValidCPF(_cpfController.text)) {
+        _exibirValidacao('CPF inválido');
         return;
       }
     } else {
@@ -172,14 +177,24 @@ class _CadastroPageState extends State<CadastroPage> {
         return;
       }
 
-      if (_cnpjController.text.isEmpty || !isValidCNPJ(_cnpjController.text)) {
-        _exibirValidacao('CNPJ inválido ou não preenchido');
+      if (_cnpjController.text.isEmpty) {
+        _exibirValidacao('CNPJ é obrigatório');
+        return;
+      }
+
+      if (!isValidCNPJ(_cnpjController.text)) {
+        _exibirValidacao('CNPJ inválido');
         return;
       }
     }
 
-    if (_emailController.text.isEmpty || !isValidEmail(_emailController.text)) {
-      _exibirValidacao('E-mail inválido ou não preenchido');
+    if (_emailController.text.isEmpty) {
+      _exibirValidacao('E-mail é obrigatório');
+      return;
+    }
+
+    if (!isValidEmail(_emailController.text)) {
+      _exibirValidacao('E-mail inválido');
       return;
     }
 
@@ -197,6 +212,42 @@ class _CadastroPageState extends State<CadastroPage> {
       _exibirValidacao('Você deve aceitar os termos e condições');
       return;
     }
+
+    dadosCadastrais.add({
+      'nome': _nomeController.text,
+      'data_nascimento': _tipoPessoa ? _nascimentoController.text : null,
+      'cpf': _tipoPessoa ? _cpfController.text : null,
+      'sexo': _sexoPessoa,
+      'tipo_pessoa': _tipoPessoa ? 'Pessoa Física' : 'Pessoa Jurídica',
+      'nome_fantasia': !_tipoPessoa ? _nomeFantasiaController.text : null,
+      'cnpj': !_tipoPessoa ? _cnpjController.text : null,
+      'email': _emailController.text,
+      'telefone': _telefoneController.text,
+      'renda_mensal': _rendaMensal,
+      'receber_notificacao': _receberNotificacao,
+      'endereco': _enderecoController.text,
+    });
+
+    _nomeController.text = '';
+    _nascimentoController.text = '';
+    _cpfController.text = '';
+    _emailController.text = '';
+    _telefoneController.text = '';
+    _enderecoController.text = '';
+    _rendaMensal = 0;
+    _aceitoTermo = false;
+    _receberNotificacao = false;
+    _nomeFantasiaController.text = '';
+    _cnpjController.text = '';
+
+    // Detalhes do cadastro
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DetalhePage(dadosCadastrais: dadosCadastrais),
+      ),
+    );
   }
 
   void _exibirValidacao(String mensagem) {
@@ -692,6 +743,113 @@ class _CadastroPageState extends State<CadastroPage> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class DetalhePage extends StatelessWidget {
+  final List<Map<String, dynamic>> dadosCadastrais;
+  const DetalhePage({super.key, required this.dadosCadastrais});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xFFF5F7FA),
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Color(0xFF344955),
+        title: const Text(
+          'Detalhes do Cadastro',
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+      ),
+
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ListView.builder(
+          itemCount: dadosCadastrais.length,
+          itemBuilder: (context, index) {
+            final cadastro = dadosCadastrais[index];
+            return Card(
+              color: Colors.amberAccent,
+              elevation: 10,
+              margin: const EdgeInsets.symmetric(vertical: 10),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              shadowColor: Colors.indigoAccent,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                child: Column(
+                  children: [
+                    Text(
+                      'Tipo de Pessoa : ${cadastro['tipo_pessoa']}',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                    ),
+
+                    Divider(color: Color(0xFF344955), thickness: 2),
+
+                    if (cadastro['tipo_pessoa'] == 'Pessoa Física') ...[
+                      Text(
+                        'Nome completo : ${cadastro['nome']}',
+                        style: TextStyle(fontSize: 16, color: Colors.black87),
+                      ),
+
+                      Text(
+                        'Data de nascimento : ${cadastro['data_nascimento']}',
+                        style: TextStyle(fontSize: 16, color: Colors.black87),
+                      ),
+
+                      Text(
+                        'CPF : ${cadastro['cpf']}',
+                        style: TextStyle(fontSize: 16, color: Colors.black87),
+                      ),
+                    ] else ...[
+                      Text(
+                        'Razão Social : ${cadastro['nome']}',
+                        style: TextStyle(fontSize: 16, color: Colors.black87),
+                      ),
+
+                      Text(
+                        'Nome Fantasia : ${cadastro['nome_fantasia']}',
+                        style: TextStyle(fontSize: 16, color: Colors.black87),
+                      ),
+
+                      Text(
+                        'CNPJ : ${cadastro['cnpj']}',
+                        style: TextStyle(fontSize: 16, color: Colors.black87),
+                      ),
+                    ],
+
+                    Text(
+                      'E-mail : ${cadastro['email']}',
+                      style: TextStyle(fontSize: 16, color: Colors.black87),
+                    ),
+
+                    Text(
+                      'Telefone : ${cadastro['telefone']}',
+                      style: TextStyle(fontSize: 16, color: Colors.black87),
+                    ),
+
+                    Text(
+                      'Endereço : ${cadastro['endereco']}',
+                      style: TextStyle(fontSize: 16, color: Colors.black87),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
         ),
       ),
     );
