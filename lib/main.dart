@@ -777,16 +777,17 @@ class DetalhePage extends StatelessWidget {
           itemBuilder: (context, index) {
             final cadastro = dadosCadastrais[index];
             return Card(
-              color: Colors.amberAccent,
+              color: Color(0xFFDDE6ED),
               elevation: 10,
               margin: const EdgeInsets.symmetric(vertical: 10),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(15),
               ),
-              shadowColor: Colors.indigoAccent,
+              shadowColor: Color(0xFF232F34),
               child: Padding(
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                padding: const EdgeInsets.only(top: 10, bottom: 10, left: 12),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Tipo de Pessoa : ${cadastro['tipo_pessoa']}',
@@ -805,13 +806,24 @@ class DetalhePage extends StatelessWidget {
                         style: TextStyle(fontSize: 16, color: Colors.black87),
                       ),
 
+                      const SizedBox(height: 8),
+
                       Text(
                         'Data de nascimento : ${cadastro['data_nascimento']}',
                         style: TextStyle(fontSize: 16, color: Colors.black87),
                       ),
 
+                      const SizedBox(height: 8),
+
                       Text(
                         'CPF : ${cadastro['cpf']}',
+                        style: TextStyle(fontSize: 16, color: Colors.black87),
+                      ),
+
+                      const SizedBox(height: 8),
+
+                      Text(
+                        'Sexo : ${cadastro['sexo']}',
                         style: TextStyle(fontSize: 16, color: Colors.black87),
                       ),
                     ] else ...[
@@ -820,10 +832,14 @@ class DetalhePage extends StatelessWidget {
                         style: TextStyle(fontSize: 16, color: Colors.black87),
                       ),
 
+                      const SizedBox(height: 8),
+
                       Text(
                         'Nome Fantasia : ${cadastro['nome_fantasia']}',
                         style: TextStyle(fontSize: 16, color: Colors.black87),
                       ),
+
+                      const SizedBox(height: 8),
 
                       Text(
                         'CNPJ : ${cadastro['cnpj']}',
@@ -831,15 +847,21 @@ class DetalhePage extends StatelessWidget {
                       ),
                     ],
 
+                    const SizedBox(height: 8),
+
                     Text(
                       'E-mail : ${cadastro['email']}',
                       style: TextStyle(fontSize: 16, color: Colors.black87),
                     ),
 
+                    const SizedBox(height: 8),
+
                     Text(
                       'Telefone : ${cadastro['telefone']}',
                       style: TextStyle(fontSize: 16, color: Colors.black87),
                     ),
+
+                    const SizedBox(height: 8),
 
                     Text(
                       'Endereço : ${cadastro['endereco']}',
